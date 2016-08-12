@@ -1,7 +1,8 @@
 WSWC Water Data Exchange (WaDE)
 
 
-LICENSE FOR SOURCE CODE AND DOCUMENTATION 
+LICENSE FOR SOURCE CODE AND DOCUMENTATION
+----------
 Copyright © 2016, the Western States Water Council. 
 
 All rights reserved. Financial Support Notice: Financial support for the creation of this software and documentation was provided by: the United States Environmental Protection Agency via the Texas Commission on Environmental Quality (TCEQ), and the Department of Energy (DOE) via the Western Governors’ Association (WGA). The Western States Water Council hereby grants permission to use, copy, modify, and distribute this software and its documentation for any purpose with or without fee, provided that the following conditions are met: 
