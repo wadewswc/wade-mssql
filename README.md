@@ -1,4 +1,5 @@
-# wade-mssql
+﻿# wade-mssql
+A collaborative activity of the Water Data Exchange or WaDE project
 
 
 Disclaimer
