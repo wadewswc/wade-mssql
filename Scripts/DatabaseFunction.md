@@ -1,1 +1,1 @@
-﻿
+﻿# WaDE Database Function
