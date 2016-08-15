@@ -1,2 +1,0 @@
-# wade-mssql
-
