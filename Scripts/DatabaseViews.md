@@ -1,1 +1,0 @@
-﻿# WaDE Database Views
