@@ -1,7 +1,7 @@
 ﻿USE [WaDE_Oct2014]
 GO
 
-/****** Object:  UserDefinedFunction [wade_r].[ALLOCATION_AMOUNT]    Script Date: 8/15/2016 11:09:18 AM ******/
+/****** Object:  UserDefinedFunction [wade_r].[ALLOCATION_AMOUNT]    Script Date: 8/15/2016 11:20:08 AM ******/
 SET ANSI_NULLS ON
 GO
 
