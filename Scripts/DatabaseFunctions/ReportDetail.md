@@ -1,0 +1,196 @@
+﻿USE [WaDE_Oct2014]
+GO
+
+/****** Object:  UserDefinedFunction [wade_r].[ReportDetail]    Script Date: 8/15/2016 11:22:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [wade_r].[ReportDetail](@orgid varchar(10), @reportid varchar(35), @loctype varchar(max), @loctxt varchar(max), @datatype varchar(60)) 
+
+RETURNS XML
+
+BEGIN
+--START FUNCTION
+
+DECLARE @tmp XML='';
+
+IF (@datatype <>'ALL')
+
+BEGIN
+--START NOT ALL
+
+IF @loctype='HUC'
+
+BEGIN
+--START HUC
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',
+	(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+	(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and HUC LIKE @loctxt + '%' AND DATATYPE=@datatype) FOR XML PATH (''));
+	
+END
+--END HUC
+	
+IF @loctype='COUNTY'
+
+BEGIN
+--START COUNTY
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',
+	(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+	(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and COUNTY_FIPS=@loctxt AND DATATYPE=@datatype) FOR XML PATH (''));
+
+END 
+--END COUNTY
+
+IF @loctype='REPORTUNIT'
+
+BEGIN
+--START REPORT UNIT
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',
+	(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+	(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and REPORTING_UNIT_ID=@loctxt AND DATATYPE=@datatype) FOR XML PATH (''));
+
+END
+--END REPORT UNIT
+
+END
+--END IF NOT ALL
+
+ELSE
+
+BEGIN
+--START IF ALL
+
+IF @loctype='HUC'
+
+BEGIN
+--START HUC
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',	
+	(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+	(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and HUC LIKE @loctxt + '%') FOR XML PATH (''));
+
+END 
+--END HUC
+
+IF @loctype='COUNTY'
+
+BEGIN
+--START COUNTY
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',
+		(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+		(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and COUNTY_FIPS=@loctxt) FOR XML PATH (''));
+
+END 
+--END COUNTY
+
+IF @loctype='REPORTUNIT'
+
+BEGIN
+--START REPORT UNIT
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT REPORT_ID AS 'WC:ReportIdentifier',
+	REPORTING_DATE AS 'WC:ReportingDate',
+	REPORTING_YEAR AS 'WC:ReportingYear',
+	REPORT_NAME AS 'WC:ReportName',
+	REPORT_LINK AS 'WC:ReportLink',
+	YEAR_TYPE AS 'WC:YearType',
+		(SELECT WADE_R.GeospatialRefDetail (@orgid, REPORT_ID, @datatype)),
+		(SELECT WADE_R.XML_ALLOCATION_DETAIL (@orgid, REPORT_ID, @loctype, @loctxt, @datatype))
+	
+	FROM 
+	
+	WADE.REPORT A WHERE EXISTS (SELECT DISTINCT ORGANIZATION_ID FROM WADE_R.DETAIL_LOCATION B WHERE A.ORGANIZATION_ID=B.ORGANIZATION_ID AND
+	A.REPORT_ID=@reportid AND B.ORGANIZATION_ID=@orgid and REPORTING_UNIT_ID=@loctxt) FOR XML PATH (''));
+	
+END
+--END REPORT UNIT
+
+END
+--END IF ALL
+
+BEGIN
+--START TAG
+
+WITH XMLNAMESPACES ('ReplaceMe' AS WC)
+
+SELECT @tmp=(SELECT @tmp FOR XML PATH('WC:Report'));
+
+END
+--END TAG
+
+RETURN(@tmp) 
+
+END
+--END FUNCTION
+GO
+
+
