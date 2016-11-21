@@ -5,7 +5,7 @@ A collaborative activity of the Water Data Exchange or WaDE project
 Description
 ----------
 
-This is the v0.2 version of the MSSQL WaDE database
+This is the v0.2 version of the MSSQL WaDE database.
 
 This software is in the public domain, containing materials that came from the [Water Data Exchange (WaDE) program](http://www.westernstateswater.org/wade/about-wade/), a project of the [Western States Water Council (WSWC)](http://www.westernstateswater.org/). 
 
