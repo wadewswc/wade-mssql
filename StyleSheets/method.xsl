@@ -16,18 +16,21 @@
 	<div class="container">
 	   <div class="header">
 		<ul class="nav nav-pills pull-right">
-			<li class=" ">
-		<!--TODO: Add link back to map interface.-->
-			<a target="_self" title="Home" href="http://wswc.maps.arcgis.com/apps/MapJournal/index.html?appid=0559c438673a4c42bb29d91aaaa1cb9a">Back to Map</a>
-			</li>
 			<li class=" active ">
-			<a target="_self" title="About" href="http://www.westernstateswater.org/wade">About</a>
+			<a target="_self" title="About" href="http://wade.westernstateswater.org/about-wade/">About WaDE</a>
+			</li>
+			<li class=" ">
+			<a target="_self" title="WaDEMaps" href="http://wade.westernstateswater.org/wade-by-location/">Back to WaDE By Map</a>
+			</li>
+			<li class=" ">
+			<a target="_self" title="WaDEDataTypes" href="http://wade.westernstateswater.org/wade-by-datatype/">Back to WaDE by DataType</a>
 			</li>
 		</ul>
 		<a href="http://www.westernstateswater.org" title="WSWC Home">
-		<img src="../images/wswclogo.png" alt="WSWC logo" height="60"/>
+		<img src="../images/wswclogo.png" alt="WSWC logo" height="90"/>
 		</a>
-		<h1>Western States Water Council - Water Data Exchange (WaDE) Methodology Data</h1>
+		<h1>Western States Water Council<br/>
+		Water Data Exchange (WaDE) Methodology Data</h1>
 	    </div>	
      
 	<div class="row">
@@ -42,7 +45,9 @@
           </div>
         </div>
        </div>   
+       
 <xsl:apply-templates select="WC:Organization"/>
+
 </div>	
 </body>
 </html>
